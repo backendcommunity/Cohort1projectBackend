@@ -23,10 +23,9 @@ This is the backend API for Finpay, a financial payment application.
 Finpay is a financial payment application that allows users to...
 
 ## Features
-
-- Feature 1
-- Feature 2
-- ...
+- User management: Create, read, update, and delete users.
+- Payment processing: Process payments between users.
+- Transaction history: View transaction history for users.
 
 ## Technologies
 
@@ -49,4 +48,42 @@ Make sure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/finpay-backend.git
+   git clone git@github.com:backendcommunity/Cohort1projectBackend.git
+
+2. Install dependencies:
+cd Cohort1projectBackend
+npm install
+
+3. Create a .env file:
+
+Copy the .env.example file to .env and fill in your database credentials:
+
+DB_HOST=localhost
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_NAME=finpay
+
+4. Start the server:
+- npm run dev
+
+5. Access the API:
+* The API is available at http://localhost:5000. You can use tools like Postman or curl to make requests to the API endpoints.
+
+### API Documentation:
+
+The API documentation is available in the docs folder. It includes details about the available endpoints, request and response formats, and authentication methods.
+
+### Technology Stack:
+
+Node.js: JavaScript runtime environment.
+Express: Web framework for Node.js.
+MySQL: Relational database management system.
+Sequelize: Object-relational mapper (ORM) for Node.js and MySQL.
+
+### Contributing:
+
+We welcome contributions to this project. Please see the CONTRIBUTING.md file for guidelines on how to contribute.
+
+### License:
+
+This project is licensed under the MIT License. See the LICENSE file for details.
