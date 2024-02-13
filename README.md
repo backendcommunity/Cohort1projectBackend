@@ -61,7 +61,7 @@ Copy the .env.example file to .env and fill in your database credentials:
 DB_HOST=localhost
 DB_USER=your_username
 DB_PASSWORD=your_password
-DB_NAME=finpay
+DB_NAME=your database name
 
 4. Start the server:
 - npm run dev
