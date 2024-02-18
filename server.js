@@ -3,6 +3,7 @@ import 'dotenv/config';
 import morgan from 'morgan';
 import cors from 'cors';
 import { testConnection } from './models/index.js';
+import errorHandler from './middlewares/error.js';
 
 const app = express();
 const port = process.env.PORT || 5001;
@@ -16,6 +17,8 @@ app.get('/', (req, res) => {
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
+
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Server is listening on http://localhost:${port}`)
