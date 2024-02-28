@@ -36,6 +36,12 @@ export const UserModel = (sequelize, DataTypes) => {
       isVerified: {
         type: DataTypes.BOOLEAN,
       },
+      resetToken: {
+        type: DataTypes.STRING,
+      },
+      tokenConfirmed: {
+        type: DataTypes.BOOLEAN,
+      },
     },
     {
       tableName: "Users",
