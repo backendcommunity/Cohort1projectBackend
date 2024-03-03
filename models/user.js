@@ -46,6 +46,10 @@ export const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      image_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       isVerified: {
         type: DataTypes.BOOLEAN,
       },

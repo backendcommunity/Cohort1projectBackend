@@ -1,7 +1,5 @@
 import db from "../models/index.js";
-import bcrypt from "bcrypt";
-import "dotenv/config";
-import { createToken } from "../middleware/auth.js";
+import cloudinary from "../utils/cloudinary.js";
 
 const UserModel = db.users;
 
@@ -11,8 +9,16 @@ export const updateUserInfo = async (req, res, next) => {
   try {
     const user = await UserModel.findOne({ where: { id: userId } });
     if (req.file) {
+      if (user?.profile_url) {
+        //clears old image from cloudinary account
+        await cloudinary.uploader.destroy(user.image_id);
+      }
       const result = await cloudinary.uploader.upload(req.file.path);
-      updateData = { ...updateData, profile_url: result?.secure_url };
+      updateData = {
+        ...updateData,
+        profile_url: result?.secure_url,
+        image_id: result?.public_id,
+      };
     }
     await user.update(updateData);
     return res
@@ -23,5 +29,3 @@ export const updateUserInfo = async (req, res, next) => {
     res.status(500).json({ error: true, message: "Internal Server Error" });
   }
 };
-
-
