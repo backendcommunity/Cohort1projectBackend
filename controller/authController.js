@@ -124,3 +124,118 @@ export const login = async (req, res) => {
     res.status(500).json({ error: true, message: "Internal Server Error" });
   }
 };
+
+// forget password
+export const forgetPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Missing required fields" });
+  }
+
+  try {
+    const user = await UserModel.findOne({ where: { email } });
+
+    if (!user) {
+      return res
+        .status(403)
+        .json({ error: true, message: "user does not exist" });
+    }
+
+    // Generate a password reset token
+    const resetToken = createToken(user.id);
+
+    // Save the reset token to the user record in the database
+    user.resetToken = resetToken;
+    await user.save();
+
+    // Send the password reset email with the token
+    await sendPasswordResetEmail(email, resetToken);
+
+    res.status(200).json({ message: "Reset token sent to email" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: true, message: "Internal Server Error" });
+  }
+};
+
+//confirmtoken
+export const confirmToken = async (req, res) => {
+  const { token } = req.body;
+
+  if (!token) {
+    return res.status(400).json({ error: true, message: "Token is missing" });
+  }
+
+  try {
+    const userToken = await UserModel.findOne({ where: { resetToken: token } });
+
+    if (!userToken) {
+      return res.status(404).json({ error: true, message: "Invalid token" });
+    }
+
+    // Check if the token is expired
+    if (userToken.resetTokenExpires < Date.now()) {
+      return res
+        .status(401)
+        .json({ error: true, message: "Token has expired" });
+    }
+
+    // Set a flag in the user's record to indicate token confirmation
+    user.tokenConfirmed = true;
+
+    // If token is valid and not expired, return success message
+    res.status(200).json({ message: "Token confirmed successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: true, message: "Internal Server Error" });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { password, confirm_password } = req.body;
+
+  if (!password || !confirm_password) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Missing required fields" });
+  }
+
+  try {
+    const user = await UserModel.findByPk(user.id);
+
+    if (!user || !user.tokenConfirmed) {
+      return res
+        .status(400)
+        .json({
+          error: true,
+          message: "Token not confirmed or user not found",
+        });
+    }
+
+    if (password !== confirm_password) {
+      return res
+        .status(400)
+        .json({ error: true, message: "Passwords do not match" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update user's password and clear reset token
+    user.password = hashedPassword;
+    user.resetToken = null;
+    user.resetTokenExpires = null;
+
+    // Reset the token confirmation flag
+    user.tokenConfirmed = false;
+
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: true, message: "Internal Server Error" });
+  }
+};

@@ -1,5 +1,7 @@
 import db from "../models/index.js";
-import cloudinary from "../utils/cloudinary.js";
+import bcrypt from "bcrypt";
+import "dotenv/config";
+import { createToken } from "../middleware/auth.js";
 
 const UserModel = db.users;
 
@@ -21,3 +23,5 @@ export const updateUserInfo = async (req, res, next) => {
     res.status(500).json({ error: true, message: "Internal Server Error" });
   }
 };
+
+
