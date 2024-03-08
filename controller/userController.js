@@ -13,6 +13,8 @@ export const register = async (req, res) => {
     phone_number,
     address,
     password,
+    gender,
+    dob,
     confirm_password,
   } = req.body;
 
@@ -22,6 +24,8 @@ export const register = async (req, res) => {
     !email ||
     !phone_number ||
     !address ||
+    !gender ||
+    !dob ||
     !password ||
     !confirm_password
   ) {
@@ -62,6 +66,8 @@ export const register = async (req, res) => {
       email,
       phone_number,
       address,
+      gender,
+      dob,
       password: hashedPassword,
     });
 

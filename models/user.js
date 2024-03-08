@@ -33,6 +33,14 @@ export const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      gender: {
+        type: DataTypes.ENUM("Male", "Female"),
+        allowNull: false,
+      },
+      dob: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+      },
       isVerified: {
         type: DataTypes.BOOLEAN,
       },
