@@ -1,6 +1,8 @@
 import { databaseConfig } from "../config/database.js";
 import { Sequelize, DataTypes } from "sequelize";
 import { UserModel } from "./user.js";
+import VirtualCardModel from "./vcard.js";
+
 // Create a Sequelize instance with the database configurations
 const sequelize = new Sequelize(
   databaseConfig.DB,
@@ -31,8 +33,15 @@ const db = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+const User = UserModel(sequelize, DataTypes);
+const VirtualCard = VirtualCardModel(sequelize, DataTypes);
+
+// db relationships
+User.hasMany(VirtualCard)
+
 // Add our models
-db.users = UserModel(sequelize, DataTypes);
+db.users = User
+db.VirtualCard = VirtualCard
 
 db.sequelize
   .sync({ alter: true })
