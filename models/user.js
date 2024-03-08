@@ -41,6 +41,19 @@ export const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.DATEONLY,
         allowNull: false
       },
+      finpay_tag: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        unique: true,
+      },
+      profile_url: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      image_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       isVerified: {
         type: DataTypes.BOOLEAN,
       },

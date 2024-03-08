@@ -1,9 +1,8 @@
-import { Router } from "express"
-import {createCard} from "../controller/vcardController.js"
-import { verifyToken } from "../middleware/auth.js"
+import { Router } from 'express';
+import { createCard } from '../controller/vcardController.js';
+import { isAuth } from '../middleware/isAuth.js';
 
-const router = Router()
+const router = Router();
+router.post('/', isAuth, createCard);
 
-router.post("/", verifyToken, createCard)
-
-export default router
+export default router;
