@@ -1,10 +1,13 @@
+import { Router } from 'express';
 import authRouter from "./authRoutes.js";
-import userRouter from "./userRoutes.js";
+import userRoute from './userRoutes.js';
+import vcardRouter from './vcardRoute.js';
 
-//ADD ALL MAJOR ROUTES HERE
-const setupRoutes = (app) => {
-  app.use("/api/auth", authRouter);
-  app.use("/api/users", userRouter);
-};
 
-export default setupRoutes;
+const routers = Router();
+
+routers.use('/users', userRoute);
+routers.use('/auth', authRouter)
+routers.use('/virtual-cards', vcardRouter);
+
+export default routers;

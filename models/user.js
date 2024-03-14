@@ -33,9 +33,13 @@ export const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      d_o_b: {
-        type: DataTypes.STRING,
-        allowNull: true,
+      gender: {
+        type: DataTypes.ENUM("Male", "Female"),
+        allowNull: false,
+      },
+      dob: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
       },
       finpay_tag: {
         type: DataTypes.STRING,

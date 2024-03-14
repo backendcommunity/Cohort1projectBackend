@@ -13,6 +13,8 @@ export const register = async (req, res) => {
     address,
     password,
     confirm_password,
+    dob,
+    gender,
   } = req.body;
 
   if (
@@ -22,7 +24,9 @@ export const register = async (req, res) => {
     !phone_number ||
     !address ||
     !password ||
-    !confirm_password
+    !confirm_password ||
+    !gender ||
+    !dob
   ) {
     return res
       .status(400)
@@ -62,6 +66,8 @@ export const register = async (req, res) => {
       phone_number,
       address,
       password: hashedPassword,
+      gender,
+      dob,
     });
 
     res
